@@ -1,0 +1,7 @@
+#!/bin/sh
+
+mkdir -p /tmp/tailscale
+/var/runtime/tailscaled --tun=userspace-networking --socks5-server=localhost:1055 &
+/var/runtime/tailscale up --authkey=${TAILSCALE_AUTHKEY} --hostname=aws-lambda-app --accept-routes
+echo Tailscale started
+/lambda-entrypoint.sh $1
